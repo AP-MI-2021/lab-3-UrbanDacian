@@ -1,6 +1,3 @@
-import math
-
-
 def get_longest_div_k(lst, k):
     """
     Determina secventa cu cele mai multe numere divizibile cu k dintr-o lista
@@ -70,6 +67,18 @@ def test_get_longest_digit_count_desc():
     assert get_longest_digit_count_desc([45, 932, 173, 92, 84, 359, 4421]) == [92, 84]
 
 
+def palindrom(n):
+    copie = n
+    numar = 0
+    if n <= 9 and n >= -9:
+        return True
+    else:
+        n = str(n)
+        if n == n[::-1]:
+            return True
+    return False
+
+
 def  get_longest_all_palindrome(lst):
     '''
     Determina secventa maxima de valori care sunt palindroame din lista
@@ -81,22 +90,24 @@ def  get_longest_all_palindrome(lst):
     cnt_act = 0
     cnt_max = 0
     for n in lst:
-        n = str(n)
-        if n == n[::-1]:
-            secv_act.append(int(n));
+        if palindrom(n) is True:
             cnt_act += 1
+            secv_act.append(n)
         else:
             if cnt_act > cnt_max:
                 cnt_max = cnt_act
-                secv_max = list(secv_act)
+                secv_max = secv_act.copy()
                 secv_act = []
                 cnt_act = 0
+    if (cnt_act > cnt_max):
+        secv_max = secv_act.copy()
     return secv_max
 
-
 def test_get_longest_all_palindrome():
-    assert get_longest_all_palindrome(['22', '33', '53']) == [22, 33]
-    assert get_longest_all_palindrome(['21', '32', '45']) == []
+    assert get_longest_all_palindrome([22, 33, 45]) == [22, 33]
+    assert get_longest_all_palindrome([2, 2, 2]) == [2, 2, 2]
+    assert get_longest_all_palindrome([14, 33, 11]) == [33]
+
 
 
 def print_menu():
@@ -119,7 +130,6 @@ def citire_lista():
 def main():
     test_get_longest_div_k()
     test_get_longest_digit_count_desc()
-    test_get_longest_all_palindrome()
     lst = []
     while True:
         print_menu()
